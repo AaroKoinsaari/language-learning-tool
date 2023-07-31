@@ -32,6 +32,7 @@ A simple console program for practicing French-English translations. The program
 
 2. Navigate to the directory:
 
+    ```bash
     cd language-learning-tool
 
 ## Usage
@@ -42,7 +43,7 @@ A simple console program for practicing French-English translations. The program
 
 ## Contact
 
-- Email: aaro.koinsaari@proton.me
-- GitHub: @aarokoinsaari
-- LinkedIn: @aarokoinsaari
-- Twitter: @aarokoinsaari
+- Email: [aaro.koinsaari@proton.me](mailto:aaro.koinsaari@proton.me)
+- [GitHub](https://github.com/aarokoinsaari)
+- [LinkedIn](https://www.linkedin.com/in/aaro-koinsaari-81b1a9227/)
+- [Twitter](https://twitter.com/aarokoinsaari)
