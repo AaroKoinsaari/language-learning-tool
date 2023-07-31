@@ -24,6 +24,7 @@ Future Improvements:
 
 import csv
 import random
+import os
 
 
 def load_dictionary(file_path):
@@ -36,15 +37,26 @@ def load_dictionary(file_path):
     Returns:
         list: A list of tuples containing English and the other language word pairs.
     """
+
+    # File not found
+    if not os.path.exists(file_path):
+        print(f"Error: File '{file_path}' not found.")
+        exit(1)
+    
     dictionary = []
-    with open(file_path, newline='', encoding='utf-8') as csvfile:
-        reader = csv.reader(csvfile, delimiter=';')
-        next(reader) # Skip the header
-
-        # Go through and add each word and its translation to the dictionary list
-        for row in reader:
-            dictionary.append((row[0], row[1]))
-
+    try:
+        with open(file_path, newline='', encoding='utf-8') as csvfile:
+            reader = csv.reader(csvfile, delimiter=';')
+            next(reader) # Skip the header
+    
+            # Go through and add each word and its translation to the dictionary list
+            for row in reader:
+                dictionary.append((row[0], row[1]))
+                
+    except Exception as e:
+        print(f"An error has occurred while reading the file: {e}")
+        exit(1)
+    
     return dictionary
 
 
@@ -72,14 +84,22 @@ def main():
     random.shuffle(dictionary)
 
     for english, french in dictionary:
-        user_input = input(f"Write in French: {english}\n")
-        if user_input.lower().strip() == 'q':
-            print("Exiting the game!")
-            return
-        elif user_input.lower().strip() == french.lower():
-            print("Correct!\n")
-        else:
-            print(f"Wrong! The correct translation is {french}\n")
+        attempts = 2 # Adjust the attempts for right answer
+        
+        while attempts > 0:
+            user_input = input(f"Write in French: {english}\n")
+            if user_input.lower().strip() == 'q':
+                print("Exiting the game!")
+                return
+            elif user_input.lower().strip() == french.lower():
+                print("Correct!\n")
+                break
+            else:
+                attempts -= 1 # Wrong answer
+                if attempts > 0:
+                    print("Wrong! You have {attempts} attempts left.\n")
+                else: # No attempts left
+                    print(f"Wrong! The correct translation is {french}\n")
 
     print("Game over!")
 
