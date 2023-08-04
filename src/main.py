@@ -155,7 +155,7 @@ def add_incorrect_word(word, username):
 
     # Open the file in writing-mode
     with open(f"../data/{username}_progress.csv", 'w', newline='', encoding='utf-8') as csvfile:
-        writer = csv.writer(csvfile)
+        writer = csv.writer(csvfile, delimiter=';')
         writer.writerow(['word', 'incorrect_attempts'])  # Header row
 
         # Iterate over the incorrect_words dictionary and write a row for each word and
@@ -164,7 +164,7 @@ def add_incorrect_word(word, username):
             writer.writerow([word, attempts])
 
 
-def get_user_file(username):
+def create_user_file(username):
     """
     Retrieves the user's progress file if it exists or creates a new one if it doesn't.
     The progress file is specific to the given username and tracks incorrect attempts at word translations.
@@ -182,11 +182,9 @@ def get_user_file(username):
         print(f"Welcome, {username}! Creating a new user profile for you.")
         with open(file_path, 'w', newline='', encoding='utf-8') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow(['word', 'incorrect_attempts'])  # Header
+            writer.writerow(['word', 'incorrect_attempts'])  # Header row
     else:  # Username and its progress file exists
         print(f"Welcome back, {username}!")
-
-    return file_path
 
 
 def play_game(username, dictionary, choice):
@@ -272,7 +270,7 @@ def main():
 
     # Handle the user progress by the username
     user = input("Please, enter your username: ")
-    user_file = get_user_file(user)  # TODO: Variable is not used
+    create_user_file(user)
 
     choice = select_translation_direction()
 
