@@ -1,14 +1,15 @@
 """
 Simple Language Learning Tool
 Author: Aaro Koinsaari
-Date: 2023-08-02
-Version: 1.1.0
+Date: 2023-08-04
+Version: 1.2.0
 
 Description:
 A simple console program for practicing French-English translations.
 The program provides a quiz-like interface where users are prompted to translate words from one 
 language to the other while tracking user progress by keeping track of failed attempts for each
-word.
+word. Usage for this tracking is yet to be developed. User can also add prompted words to his/her
+own dictionary. Usage for this too is yet to be developed.
 
 Future Improvements:
 - Addition of sentences
@@ -164,7 +165,7 @@ def add_incorrect_word(word, username):
             writer.writerow([word, attempts])
 
 
-def create_user_file(username):
+def create_user_files(username):
     """
     Retrieves the user's progress file if it exists or creates a new one if it doesn't.
     The progress file is specific to the given username and tracks incorrect attempts at word translations.
@@ -176,14 +177,19 @@ def create_user_file(username):
         str: The file path to the user's progress file. This file will either be newly created or already exist.
     """
 
-    file_path = f"../data/{username}_progress.csv"
+    progress_file_path = f"../data/{username}_progress.csv"
+    dictionary_file_path = f"../data/{username}_dictionary.csv"
 
-    if not os.path.exists(file_path):  # Create a new progress file
+    # Create the progress file
+    if not os.path.exists(progress_file_path):
         print(f"Welcome, {username}! Creating a new user profile for you.")
-        with open(file_path, 'w', newline='', encoding='utf-8') as csvfile:
+        with open(progress_file_path, 'w', newline='', encoding='utf-8') as csvfile:
             writer = csv.writer(csvfile)
             writer.writerow(['word', 'incorrect_attempts'])  # Header row
-    else:  # Username and its progress file exists
+        with open(dictionary_file_path, 'w', newline='', encoding='utf-8') as csvfile:
+            writer = csv.writer(csvfile)
+            writer.writerow(['word', 'translation'])  # Header row
+    else:  # Username with its progress file and personal dictionary file exists
         print(f"Welcome back, {username}!")
 
 
@@ -221,7 +227,7 @@ def play_game(username, dictionary, choice):
 
             # Save word in own dictionary
             elif user_input.lower().strip() == 's':
-                save_word(username, user_input.lower().strip(), answer)
+                save_word(username, prompt, answer)
                 print("Word and its translation saved in dictionary!\n")
 
             # Correct answer
@@ -270,7 +276,7 @@ def main():
 
     # Handle the user progress by the username
     user = input("Please, enter your username: ")
-    create_user_file(user)
+    create_user_files(user)
 
     choice = select_translation_direction()
 
