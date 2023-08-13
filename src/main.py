@@ -85,7 +85,6 @@ def select_translation_direction():
     return choice
 
 
-# TODO: Fix the double quote when saving pairs that have multiple correct answers
 def save_word(username, user_input, word):
     """
     Saves a user-specified word and its corresponding translation into a CSV file.
@@ -128,7 +127,6 @@ def add_incorrect_word(word, username):
             next(reader)  # Skip the header row
 
             # Iterate through the rows, adding each word and its attempts to the dictionary
-            # TODO: Issue if two or more incorrect answers for the same word. Throws IndexError
             for row in reader:
                 incorrect_words[row[0]] = int(row[1])
 
@@ -260,11 +258,12 @@ def play_game(username, dictionary, choice):
             # continue
 
             else:
-                # Normalize the user's input by converting to lowercase, removing trailing ellipses, and trimming spaces
-                normalized_user_input = user_input.lower().rstrip("...").strip()
+                # Normalize the user's input by converting to lowercase, removing trailing ellipses,
+                # trimming spaces, and removing possible double quotes
+                normalized_user_input = user_input.lower().rstrip("...").replace('"', '').strip()
 
                 # Normalize all the correct answers
-                normalized_answers = [ans.lower().rstrip("...").strip() for ans in answers]
+                normalized_answers = [ans.lower().rstrip("...").replace('"', '').strip() for ans in answers]
 
                 # Check the normalized versions to determine if the answer is correct
                 if normalized_user_input in normalized_answers:
