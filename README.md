@@ -45,5 +45,5 @@ A simple console program for practicing French-English translations. The program
 
 - Email: [aaro.koinsaari@proton.me](mailto:aaro.koinsaari@proton.me)
 - [GitHub](https://github.com/aarokoinsaari)
-- [LinkedIn](https://www.linkedin.com/in/aaro-koinsaari-81b1a9227/)
+- [LinkedIn](https://www.linkedin.com/in/AaroKoinsaari)
 - [Twitter](https://twitter.com/aarokoinsaari)
